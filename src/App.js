@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { connect } from "react-redux";
+import Note from "./Note";
+import "./App.css";
 
-function App() {
+const App = (props) => {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {props.notesArray.map((note) => {
+          return (
+            <Note
+              key={note.id}
+              note={note}
+              showClose={props.notesArray.length > 1}
+            ></Note>
+          );
+        })}
       </header>
     </div>
   );
+};
+
+function mapStateToProps(state) {
+  return {
+    notesArray: state,
+  };
 }
 
-export default App;
+export default connect(mapStateToProps)(App);
